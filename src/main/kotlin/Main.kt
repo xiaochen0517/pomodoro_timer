@@ -7,6 +7,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.window.Tray
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 
@@ -25,7 +27,23 @@ fun App() {
 }
 
 fun main() = application {
-    Window(onCloseRequest = ::exitApplication) {
+
+    val icon = painterResource("icon.png")
+
+    Tray(
+        icon = icon,
+        menu = {
+            Item("Exit") {
+                exitApplication()
+            }
+        }
+    )
+
+    Window(
+        onCloseRequest = ::exitApplication,
+        icon = icon,
+        title = "Pomodoro Timer"
+    ) {
         App()
     }
 }

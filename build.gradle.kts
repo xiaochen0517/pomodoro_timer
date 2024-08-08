@@ -31,6 +31,11 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "pomodoro_timer"
             packageVersion = "1.0.0"
+
+            windows {
+                shortcut = true
+                menu = true
+            }
         }
     }
 }
