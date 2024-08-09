@@ -16,93 +16,111 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
+import store.AppState
 import java.awt.Cursor
+import java.awt.SystemTray
+import java.awt.Toolkit
+import java.awt.TrayIcon
 
+
+fun sendWindowsNotification(title: String, message: String) {
+    if (SystemTray.isSupported()) {
+        val tray = SystemTray.getSystemTray()
+        val trayIcon = TrayIcon(Toolkit.getDefaultToolkit().createImage(""), title)
+        trayIcon.isImageAutoSize = true
+        trayIcon.toolTip = title
+
+        tray.add(trayIcon)
+        trayIcon.displayMessage(title, message, TrayIcon.MessageType.INFO)
+
+        // Remove the tray icon after displaying the message.
+        tray.remove(trayIcon)
+    } else {
+        println("System tray not supported!")
+    }
+}
 
 @Composable
 @Preview
-fun HomeView() {
+fun HomeView(state: AppState, changeView: (String) -> Unit) {
+
     var startButtonText by remember { mutableStateOf("开始计时") }
-    var startCountDown by remember { mutableStateOf(false) }
 
-    var timeLeft by remember { mutableStateOf(1500L) }
-
-    LaunchedEffect(startCountDown) {
-        if (startCountDown) {
-            while (timeLeft > 0) {
+    LaunchedEffect(state.startCountDown) {
+        if (state.startCountDown) {
+            while (state.leftTime > 0) {
                 delay(1000L)
-                timeLeft -= 1
+                state.leftTime--
             }
-            startCountDown = false
+            state.startCountDown = false
+            sendWindowsNotification("Pomodoro Timer", "计时结束")
         }
     }
 
-    MaterialTheme {
-        Row(
-            modifier = Modifier.fillMaxSize(),
-            verticalAlignment = Alignment.CenterVertically,
+    Row(
+        modifier = Modifier.fillMaxSize(),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-            Column(
+            Card(
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 6.dp
+                ),
                 modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
+                    .padding(12.dp)
             ) {
-                Card(
-                    elevation = CardDefaults.cardElevation(
-                        defaultElevation = 6.dp
-                    ),
+                Column(
                     modifier = Modifier
-                        .padding(12.dp)
+                        .padding(paddingValues = PaddingValues(48.dp, 12.dp, 48.dp, 12.dp)),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .padding(paddingValues = PaddingValues(48.dp, 12.dp, 48.dp, 12.dp)),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Row {
-                            val textStyle = TextStyle(
-                                fontSize = TextUnit(48f, TextUnitType.Sp),
-                                fontWeight = FontWeight.Bold
-                            )
-                            val timeInfo = calculateTime(timeLeft)
-                            Text(text = timeInfo.first, style = textStyle)
-                            Text(text = " : ", style = textStyle)
-                            Text(text = timeInfo.second, style = textStyle)
-                        }
-                    }
-                }
-
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    Button(
-                        onClick = {
-                            if (startCountDown) {
-                                startButtonText = "继续计时"
-                                startCountDown = false
-                            } else {
-                                startButtonText = "暂停计时"
-                                startCountDown = true
-                            }
-                        },
-                        modifier = Modifier.pointerHoverIcon(PointerIcon(Cursor(Cursor.HAND_CURSOR)))
-                    ) {
-                        Text(startButtonText)
-                    }
-
-                    Button(
-                        onClick = {
-                            println("点击了设置按钮")
-                        },
-                        modifier = Modifier.pointerHoverIcon(PointerIcon(Cursor(Cursor.HAND_CURSOR))),
-                    ) {
-                        Icon(Icons.Default.Settings, contentDescription = "设置")
+                    Row {
+                        val textStyle = TextStyle(
+                            fontSize = TextUnit(48f, TextUnitType.Sp),
+                            fontWeight = FontWeight.Bold
+                        )
+                        val timeInfo = calculateTime(state.leftTime)
+                        Text(text = timeInfo.first, style = textStyle)
+                        Text(text = " : ", style = textStyle)
+                        Text(text = timeInfo.second, style = textStyle)
                     }
                 }
             }
-        }
 
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                Button(
+                    onClick = {
+                        if (state.startCountDown) {
+                            startButtonText = "继续计时"
+                            state.startCountDown = false
+                        } else {
+                            startButtonText = "暂停计时"
+                            state.startCountDown = true
+                        }
+                    },
+                    modifier = Modifier.pointerHoverIcon(PointerIcon(Cursor(Cursor.HAND_CURSOR)))
+                ) {
+                    Text(startButtonText)
+                }
+
+                Button(
+                    onClick = {
+                        println("点击了设置按钮")
+                        changeView("settings")
+                    },
+                    modifier = Modifier.pointerHoverIcon(PointerIcon(Cursor(Cursor.HAND_CURSOR))),
+                ) {
+                    Icon(Icons.Default.Settings, contentDescription = "设置")
+                }
+            }
+        }
     }
 }
 
