@@ -22,6 +22,8 @@ dependencies {
     // With compose.desktop.common you will also lose @Preview functionality
     implementation(compose.desktop.currentOs)
     implementation("org.jetbrains.compose.material3:material3:1.6.11")
+    implementation("androidx.compose.material:material-icons-extended:1.6.8")
+    implementation("com.alibaba.fastjson2:fastjson2:2.0.52")
 }
 
 compose.desktop {

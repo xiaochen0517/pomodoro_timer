@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import store.AppState
 
 @Composable
-@Preview
 fun SettingsView(state: AppState, changeView: (String) -> Unit) {
 
     Row(
@@ -32,4 +31,10 @@ fun SettingsView(state: AppState, changeView: (String) -> Unit) {
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun SettingsViewPreview() {
+    SettingsView(AppState()) {}
 }
