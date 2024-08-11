@@ -6,14 +6,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.window.Tray
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import androidx.compose.ui.window.rememberTrayState
+import store.AppStore
 
 fun main() = application {
 
     val icon = painterResource("icon.png")
-
     var windowVisible by remember { mutableStateOf(true) }
 
+    val trayState = rememberTrayState()
     Tray(
+        state = trayState,
         onAction = {
             windowVisible = true
         },
@@ -27,6 +30,7 @@ fun main() = application {
             }
         }
     )
+    AppStore.state.trayState = trayState
 
     Window(
         onCloseRequest = {
@@ -36,7 +40,8 @@ fun main() = application {
         },
         visible = windowVisible,
         icon = icon,
-        title = "Pomodoro Timer"
+        title = "番茄时钟（Pomodoro Timer）",
+        resizable = false,
     ) {
         App()
     }

@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.mochen.pomodoro.timer"
-version = "1.0-SNAPSHOT"
+version = "0.0.1"
 
 repositories {
     mavenCentral()
@@ -32,8 +32,8 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "pomodoro_timer"
-            packageVersion = "1.0.0"
+            packageName = "番茄时钟（Pomodoro timer）"
+            packageVersion = "1.0.1"
 
             windows {
                 shortcut = true

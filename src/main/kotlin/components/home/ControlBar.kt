@@ -12,17 +12,19 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import store.AppState
-import java.awt.Cursor
 
 @Composable
 fun ControlBar(state: AppState, changeView: (String) -> Unit) {
 
     val startButtonText = if (state.startCountDown) "暂停" else "开始"
+    val scope = rememberCoroutineScope()
 
     Row(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -30,8 +32,11 @@ fun ControlBar(state: AppState, changeView: (String) -> Unit) {
         Button(
             onClick = {
                 state.setCountDownFlag(!state.startCountDown)
+                scope.launch {
+                    state.snackbarHostState.showSnackbar(message = "${startButtonText}倒计时")
+                }
             },
-            modifier = Modifier.pointerHoverIcon(PointerIcon(Cursor(Cursor.HAND_CURSOR)))
+            modifier = Modifier.pointerHoverIcon(PointerIcon.Hand)
         ) {
             if (state.startCountDown) {
                 Icon(Icons.Filled.Stop, contentDescription = "暂停")
@@ -41,21 +46,18 @@ fun ControlBar(state: AppState, changeView: (String) -> Unit) {
             Text(startButtonText)
         }
 
-        Button(
-            onClick = {
-                println("点击设置按钮")
-                changeView("settings")
-            },
-            modifier = Modifier.pointerHoverIcon(PointerIcon(Cursor(Cursor.HAND_CURSOR))),
-        ) {
-            Icon(Icons.Default.Settings, contentDescription = "设置")
-        }
+//        Button(
+//            onClick = {
+//                changeView("settings")
+//            },
+//            modifier = Modifier.pointerHoverIcon(PointerIcon.Hand),
+//        ) {
+//            Icon(Icons.Default.Settings, contentDescription = "设置")
+//        }
 
         Button(
-            onClick = {
-                println("点击时间配置按钮")
-            },
-            modifier = Modifier.pointerHoverIcon(PointerIcon(Cursor(Cursor.HAND_CURSOR))),
+            onClick = { state.showTimeSelectorDialog = true },
+            modifier = Modifier.pointerHoverIcon(PointerIcon.Hand),
         ) {
             Icon(Icons.Default.Timer, contentDescription = "时间配置")
         }
