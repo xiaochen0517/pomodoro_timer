@@ -12,27 +12,16 @@ import views.SettingsView
 @Composable
 @Preview
 fun App() {
-
     val state = AppStore.state
-
-    var currentView by remember { mutableStateOf("home") }
-
     MaterialTheme {
         Scaffold(
             snackbarHost = { SnackbarHost(hostState = state.snackbarHostState) }
         ) {
             CountDownService(state)
-            Crossfade(targetState = currentView) { viewInfo ->
+            Crossfade(targetState = state.currentView) { viewInfo ->
                 when (viewInfo) {
-                    "home" -> HomeView(
-                        state = state,
-                        changeView = { newView -> currentView = newView }
-                    )
-
-                    "settings" -> SettingsView(
-                        state = state,
-                        changeView = { newView -> currentView = newView }
-                    )
+                    "home" -> HomeView()
+                    "settings" -> SettingsView()
                 }
             }
         }

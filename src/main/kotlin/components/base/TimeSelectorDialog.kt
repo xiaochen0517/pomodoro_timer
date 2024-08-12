@@ -4,7 +4,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,13 +19,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import store.AppState
+import store.AppStore
 import utils.CountDownType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TimeSelectorDialog(state: AppState) {
-
+fun TimeSelectorDialog() {
+    val state = AppStore.state
     var currentCountDownType by remember { mutableStateOf(state.countDownType) }
 
     AnimatedVisibility(
@@ -136,12 +135,4 @@ fun TimeSelectorDialog(state: AppState) {
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun TimeSelectorDialogPreview() {
-    val state = AppState()
-    state.showTimeSelectorDialog = true
-    TimeSelectorDialog(state)
 }

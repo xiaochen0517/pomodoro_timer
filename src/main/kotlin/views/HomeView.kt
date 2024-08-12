@@ -8,12 +8,11 @@ import androidx.compose.ui.Modifier
 import components.base.TimeSelectorDialog
 import components.home.ControlBar
 import components.home.TimerCard
-import store.AppState
 
 
 @Composable
-fun HomeView(state: AppState, changeView: (String) -> Unit) {
-
+@Preview
+fun HomeView() {
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
@@ -25,18 +24,12 @@ fun HomeView(state: AppState, changeView: (String) -> Unit) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                TimerCard(state)
-                ControlBar(state, changeView)
+                TimerCard()
+                ControlBar()
             }
         }
-        TimeSelectorDialog(state)
+        TimeSelectorDialog()
     }
-}
-
-@Preview
-@Composable
-fun HomeViewPreview() {
-    HomeView(AppState()) {}
 }
 
 /**

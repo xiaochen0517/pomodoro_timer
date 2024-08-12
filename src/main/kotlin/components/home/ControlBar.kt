@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material3.Button
@@ -18,11 +17,12 @@ import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import store.AppState
+import store.AppStore
 
 @Composable
-fun ControlBar(state: AppState, changeView: (String) -> Unit) {
-
+@Preview
+fun ControlBar() {
+    val state = AppStore.state
     val startButtonText = if (state.startCountDown) "暂停" else "开始"
     val scope = rememberCoroutineScope()
 
@@ -62,10 +62,4 @@ fun ControlBar(state: AppState, changeView: (String) -> Unit) {
             Icon(Icons.Default.Timer, contentDescription = "时间配置")
         }
     }
-}
-
-@Preview
-@Composable
-fun ControlBarPreview() {
-    ControlBar(AppState()) {}
 }

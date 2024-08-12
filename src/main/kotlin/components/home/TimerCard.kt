@@ -14,12 +14,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
-import store.AppState
+import store.AppStore
 import views.calculateTime
 
 @Composable
-fun TimerCard(state: AppState) {
-
+@Preview
+fun TimerCard() {
+    val state = AppStore.state
     Card(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -94,13 +95,3 @@ fun TimerCard(state: AppState) {
         }
     }
 }
-
-@Preview
-@Composable
-fun TimerCardPreview() {
-    TimerCard(AppState())
-}
-
-
-
-

@@ -21,6 +21,7 @@ class AppState {
 
     var trayState: TrayState? = null
     val snackbarHostState = SnackbarHostState()
+    var currentView by mutableStateOf("home")
     var showTimeSelectorDialog by mutableStateOf(false)
 
     fun setState(newState: AppState) {

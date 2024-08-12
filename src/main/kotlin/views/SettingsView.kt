@@ -10,11 +10,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import store.AppState
+import store.AppStore
 
 @Composable
-fun SettingsView(state: AppState, changeView: (String) -> Unit) {
-
+@Preview
+fun SettingsView() {
+    val state = AppStore.state
     Row(
         modifier = Modifier.fillMaxSize(),
         verticalAlignment = Alignment.CenterVertically,
@@ -25,16 +26,10 @@ fun SettingsView(state: AppState, changeView: (String) -> Unit) {
         ) {
             Text("Settings View")
             Button(onClick = {
-                changeView("home")
+                state.currentView = "home"
             }) {
                 Text("Go back")
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun SettingsViewPreview() {
-    SettingsView(AppState()) {}
 }
