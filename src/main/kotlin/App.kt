@@ -3,7 +3,8 @@ import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import components.base.HintDialogWindow
 import service.CountDownService
 import store.AppStore
 import views.HomeView
@@ -17,7 +18,7 @@ fun App() {
         Scaffold(
             snackbarHost = { SnackbarHost(hostState = state.snackbarHostState) }
         ) {
-            CountDownService(state)
+            CountDownService()
             Crossfade(targetState = state.currentView) { viewInfo ->
                 when (viewInfo) {
                     "home" -> HomeView()
@@ -27,4 +28,5 @@ fun App() {
         }
     }
 
+    HintDialogWindow()
 }

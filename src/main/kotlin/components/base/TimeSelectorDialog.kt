@@ -29,7 +29,7 @@ fun TimeSelectorDialog() {
     var currentCountDownType by remember { mutableStateOf(state.countDownType) }
 
     AnimatedVisibility(
-        visible = state.showTimeSelectorDialog,
+        visible = state.timerTypeDialogVisible,
         enter = fadeIn(animationSpec = tween(durationMillis = 500)),
         exit = fadeOut(animationSpec = tween(durationMillis = 500))
     ) {
@@ -116,7 +116,7 @@ fun TimeSelectorDialog() {
 
                     TextButton(
                         onClick = {
-                            state.showTimeSelectorDialog = false
+                            state.timerTypeDialogVisible = false
                         },
                         contentPadding = PaddingValues(24.dp, 2.dp),
                     ) {
@@ -124,7 +124,7 @@ fun TimeSelectorDialog() {
                     }
                     TextButton(
                         onClick = {
-                            state.showTimeSelectorDialog = false
+                            state.timerTypeDialogVisible = false
                             state.resetCountDown(currentCountDownType)
                         },
                         contentPadding = PaddingValues(24.dp, 2.dp),

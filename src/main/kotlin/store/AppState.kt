@@ -11,7 +11,7 @@ import utils.TimerType
 import java.io.File
 
 class AppState {
-    var leftTime by mutableStateOf(10L)
+    var leftTime by mutableStateOf(2L)
     var startCountDown by mutableStateOf(false)
     var countDownType by mutableStateOf(CountDownType.MEDIUM)
     var timerInfo by mutableStateOf(countDownType.getTimerInfo())
@@ -19,10 +19,13 @@ class AppState {
     var shortCycleCount by mutableStateOf(0)
     var longCycleCount by mutableStateOf(0)
 
+
+    var mainWindowVisible by mutableStateOf(true)
     var trayState: TrayState? = null
     val snackbarHostState = SnackbarHostState()
     var currentView by mutableStateOf("home")
-    var showTimeSelectorDialog by mutableStateOf(false)
+    var timerTypeDialogVisible by mutableStateOf(false)
+    var hintWindowVisible by mutableStateOf(false)
 
     fun setState(newState: AppState) {
         this.leftTime = newState.leftTime
@@ -60,6 +63,15 @@ class AppState {
         this.longCycleCount = 0
         this.startCountDown = false
         this.leftTime = (timerInfo.work * 60).toLong()
+    }
+
+    fun showHintWindow() {
+        this.mainWindowVisible = true
+        this.hintWindowVisible = true
+    }
+
+    fun closeHintWindow() {
+        this.hintWindowVisible = false
     }
 
 }

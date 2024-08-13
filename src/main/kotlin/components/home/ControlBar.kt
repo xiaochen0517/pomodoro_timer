@@ -56,7 +56,7 @@ fun ControlBar() {
 //        }
 
         Button(
-            onClick = { state.showTimeSelectorDialog = true },
+            onClick = { state.timerTypeDialogVisible = true },
             modifier = Modifier.pointerHoverIcon(PointerIcon.Hand),
         ) {
             Icon(Icons.Default.Timer, contentDescription = "时间配置")

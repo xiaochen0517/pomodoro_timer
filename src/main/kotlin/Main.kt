@@ -12,33 +12,32 @@ import store.AppStore
 fun main() = application {
 
     val icon = painterResource("icon.png")
-    var windowVisible by remember { mutableStateOf(true) }
-
     val trayState = rememberTrayState()
+    val state = AppStore.state
+    state.trayState = trayState
     Tray(
-        state = trayState,
+        state = state.trayState!!,
         onAction = {
-            windowVisible = true
+            state.mainWindowVisible = true
         },
         icon = icon,
         menu = {
             Item("Show") {
-                windowVisible = true
+                state.mainWindowVisible = true
             }
             Item("Exit") {
                 exitApplication()
             }
         }
     )
-    AppStore.state.trayState = trayState
 
     Window(
         onCloseRequest = {
             // close windows but keep the app running
             println("Window closed")
-            windowVisible = false
+            state.mainWindowVisible = false
         },
-        visible = windowVisible,
+        visible = state.mainWindowVisible,
         icon = icon,
         title = "番茄时钟（Pomodoro Timer）",
         resizable = false,
