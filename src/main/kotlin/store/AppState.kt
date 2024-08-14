@@ -27,6 +27,8 @@ class AppState {
     var timerTypeDialogVisible by mutableStateOf(false)
     var hintWindowVisible by mutableStateOf(false)
 
+    val appName = "番茄时钟（Pomodoro Timer）"
+
     fun setState(newState: AppState) {
         this.leftTime = newState.leftTime
         this.startCountDown = newState.startCountDown

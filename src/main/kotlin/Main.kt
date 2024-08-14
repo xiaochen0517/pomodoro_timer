@@ -1,12 +1,5 @@
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.window.Tray
-import androidx.compose.ui.window.Window
-import androidx.compose.ui.window.application
-import androidx.compose.ui.window.rememberTrayState
+import androidx.compose.ui.window.*
 import store.AppStore
 
 fun main() = application {
@@ -36,10 +29,11 @@ fun main() = application {
             // close windows but keep the app running
             println("Window closed")
             state.mainWindowVisible = false
+            state.trayState?.sendNotification(Notification(state.appName, "已最小化到系统托盘",))
         },
         visible = state.mainWindowVisible,
         icon = icon,
-        title = "番茄时钟（Pomodoro Timer）",
+        title = state.appName,
         resizable = false,
     ) {
         App()
