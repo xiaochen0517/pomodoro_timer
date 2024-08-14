@@ -31,7 +31,7 @@ fun ControlBar() {
     ) {
         Button(
             onClick = {
-                state.setCountDownFlag(!state.startCountDown)
+                state.startCountDown = !state.startCountDown
                 scope.launch {
                     state.snackbarHostState.showSnackbar(message = "${startButtonText}倒计时")
                 }
