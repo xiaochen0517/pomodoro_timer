@@ -24,6 +24,8 @@ dependencies {
     implementation("org.jetbrains.compose.material3:material3:1.6.11")
     implementation("androidx.compose.material:material-icons-extended:1.6.8")
     implementation("com.alibaba.fastjson2:fastjson2:2.0.52")
+    implementation("org.slf4j:slf4j-api:2.0.16")
+    implementation("ch.qos.logback:logback-classic:1.5.6")
 }
 
 compose.desktop {

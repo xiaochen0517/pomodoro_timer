@@ -1,21 +1,21 @@
 package utils
 
 import com.alibaba.fastjson2.JSON
+import org.slf4j.LoggerFactory
 import store.AppState
 import store.AppStore
 import java.io.File
-import java.util.logging.Logger
 
 class StoreUtil {
     companion object {
 
-        private val log = Logger.getLogger(StoreUtil::class.java.name)
+        private val log = LoggerFactory.getLogger(StoreUtil::class.java)
 
         private val configPath = "${getCurrentDirectory()}/config.json"
 
         private fun getCurrentDirectory(): String {
             val path = File(AppState::class.java.protectionDomain.codeSource.location.toURI().path).parent
-            println(path)
+            log.info("current config directory: $path")
             return path
         }
 
