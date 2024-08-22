@@ -8,11 +8,14 @@ import androidx.compose.ui.Modifier
 import components.base.TimeSelectorDialog
 import components.home.ControlBar
 import components.home.TimerCard
+import utils.LogUtil
 
+val log = LogUtil.create("HomeView")
 
 @Composable
 @Preview
 fun HomeView() {
+    log.info("App start")
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {

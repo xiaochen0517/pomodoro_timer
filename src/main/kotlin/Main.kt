@@ -1,8 +1,13 @@
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.window.*
 import store.AppStore
+import utils.LogUtil
+
+val log = LogUtil.create("Main")
 
 fun main() = application {
+
+    log.info("App start")
 
     val icon = painterResource("icon.png")
     val trayState = rememberTrayState()
