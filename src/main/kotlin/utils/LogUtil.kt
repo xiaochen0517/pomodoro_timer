@@ -1,5 +1,6 @@
 package utils
 
+import java.io.File
 import java.io.Serializable
 
 class LogUtil(val name: String = "") : Serializable {
@@ -7,7 +8,24 @@ class LogUtil(val name: String = "") : Serializable {
     companion object {
 
         fun create(name: String): LogUtil {
+            // create log file
+            createLogFile()
             return LogUtil(name)
+        }
+
+        private fun createLogFile(): File {
+            // check path exists
+            val logPath = File(PathUtil.logPath)
+            if (!logPath.exists()) {
+                logPath.mkdirs()
+            }
+            // create log file
+            val logFile = File(PathUtil.logPath + "log-${DateUtil.getNowSimpleDate()}.log")
+            // check if log file exists
+            if (!logFile.exists()) {
+                logFile.createNewFile()
+            }
+            return logFile
         }
 
     }
@@ -15,7 +33,14 @@ class LogUtil(val name: String = "") : Serializable {
     private fun print(logType: LogType, message: String) {
         val logTypeStr = padStart(logType.name, 5)
         val logName = padStart(this.name, 10)
-        println("${getCurrentTime()} $logTypeStr ${getThreadInfoStr()} $logName - $message")
+        val printLog = "${getCurrentTime()} $logTypeStr ${getThreadInfoStr()} $logName - $message"
+        println(printLog)
+        try {
+            // write log to file in append mode
+            File(PathUtil.logPath + "log-${DateUtil.getNowSimpleDate()}.log").appendText("$printLog\n")
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun getThreadInfoStr(): String {

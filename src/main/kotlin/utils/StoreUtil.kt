@@ -1,35 +1,35 @@
 package utils
 
-import com.alibaba.fastjson2.JSON
-import store.AppState
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import store.AppStore
+import store.SerializableAppState
 import java.io.File
 
 class StoreUtil {
     companion object {
 
-        private val configPath = "${getCurrentDirectory()}/config.json"
-
-        private fun getCurrentDirectory(): String {
-            val path = File(AppState::class.java.protectionDomain.codeSource.location.toURI().path).parent
-            return path
-        }
+        private val log = LogUtil.create("StoreUtil")
+        private val gson: Gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
 
         fun saveConfig() {
             try {
-                val json = JSON.toJSONString(AppStore.state)
-                File(configPath).writeText(json)
+                val json = gson.toJson(AppStore.state.getSerializableAppState())
+                log.debug("save config: $json")
+                File(PathUtil.configPath).writeText(json)
             } catch (e: Exception) {
                 e.printStackTrace()
+                log.error("save config error: ${e.message}")
             }
         }
 
-        fun loadConfig(): AppState {
+        fun loadConfig(): SerializableAppState {
             try {
-                val json = File(configPath).readText()
-                return JSON.parseObject(json, AppState::class.java)
+                val json = File(PathUtil.configPath).readText()
+                return gson.fromJson(json, SerializableAppState::class.java)
             } catch (e: Exception) {
-                return AppState()
+                log.error("load config error: ${e.message}")
+                return SerializableAppState()
             }
         }
     }

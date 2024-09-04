@@ -23,7 +23,7 @@ dependencies {
     implementation(compose.desktop.currentOs)
     implementation("org.jetbrains.compose.material3:material3:1.6.11")
     implementation("androidx.compose.material:material-icons-extended:1.6.8")
-    implementation("com.alibaba.fastjson2:fastjson2:2.0.52")
+    implementation("com.google.code.gson:gson:2.11.0")
 }
 
 compose.desktop {
@@ -33,11 +33,12 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Exe, TargetFormat.Deb)
             packageName = "番茄时钟（Pomodoro Timer）"
-            packageVersion = "1.0.3"
+            packageVersion = "1.0.7"
 
             windows {
                 shortcut = true
                 menu = true
+                console = true
             }
         }
     }

@@ -5,10 +5,24 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.window.TrayState
+import com.google.gson.annotations.Expose
 import utils.CountDownType
 import utils.StoreUtil
 import utils.TimerType
 import java.io.Serializable
+
+data class SerializableAppState(
+    @Expose
+    var countDownType: CountDownType = CountDownType.MEDIUM,
+    @Expose
+    var currentTimerType: TimerType = TimerType.WORK,
+    @Expose
+    var shortCycleCount: Int = 0,
+    @Expose
+    var longCycleCount: Int = 0,
+    @Expose
+    var leftTime: Long = 2L
+)
 
 class AppState : Serializable {
 
@@ -16,7 +30,6 @@ class AppState : Serializable {
     var currentTimerType by mutableStateOf(TimerType.WORK)
     var shortCycleCount by mutableStateOf(0)
     var longCycleCount by mutableStateOf(0)
-
 
     var leftTime by mutableStateOf(2L)
     var startCountDown by mutableStateOf(false)
@@ -53,7 +66,7 @@ class AppState : Serializable {
     /**
      * set function
      */
-    fun setState(newState: AppState) {
+    fun setState(newState: SerializableAppState) {
         this.countDownType = newState.countDownType
         this.currentTimerType = newState.currentTimerType
         this.shortCycleCount = newState.shortCycleCount
@@ -82,6 +95,16 @@ class AppState : Serializable {
         this.startCountDown = false
         this.leftTime = (timerInfo.work * 60).toLong()
         StoreUtil.saveConfig()
+    }
+
+    fun getSerializableAppState(): SerializableAppState {
+        return SerializableAppState(
+            countDownType = this.countDownType,
+            currentTimerType = this.currentTimerType,
+            shortCycleCount = this.shortCycleCount,
+            longCycleCount = this.longCycleCount,
+            leftTime = this.leftTime
+        )
     }
 
 }
