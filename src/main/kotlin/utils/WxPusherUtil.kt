@@ -1,5 +1,6 @@
 package utils
 
+import androidx.compose.ui.window.Notification
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import model.WxPusherContentType
@@ -22,6 +23,10 @@ class WxPusherUtil {
         private var client: OkHttpClient = OkHttpClient()
 
         private const val WX_PUSHER_API_URL = "https://pt.pusher.mochen.fun/api"
+
+        fun sendNotification(notification: Notification) {
+            sendNotification(notification.title, notification.message)
+        }
 
         fun sendNotification(
             title: String,

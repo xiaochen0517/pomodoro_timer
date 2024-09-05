@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import store.AppStore
 import utils.WxPusherUtil
@@ -86,7 +87,10 @@ fun WxPusherConfigDialog() {
                                 }
                                 return@TextButton
                             }
-                            WxPusherUtil.sendNotification("测试", "这是一条测试消息", uid = currentWxPusherUID)
+                            // 使用IO线程发送测试消息，避免阻塞UI线程
+                            scope.launch(Dispatchers.IO) {
+                                WxPusherUtil.sendNotification("测试", "这是一条测试消息", uid = currentWxPusherUID)
+                            }
                         },
                         contentPadding = PaddingValues(24.dp, 2.dp),
                     ) {

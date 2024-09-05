@@ -3,11 +3,13 @@ package service
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import store.AppState
 import store.AppStore
 import utils.TimerType
+import utils.WxPusherUtil
 
 @Composable
 fun CountDownService() {
@@ -24,9 +26,13 @@ fun CountDownService() {
             scope.launch {
                 state.snackbarHostState.showSnackbar(message = "倒计时结束")
             }
-            state.trayState?.sendNotification(state.currentTimerType.getNotification())
+            val timerNotification = state.currentTimerType.getNotification()
+            state.trayState?.sendNotification(timerNotification)
+            scope.launch(Dispatchers.IO) {
+                WxPusherUtil.sendNotification(timerNotification)
+            }
             state.showHintWindow()
-            // 检查当前所处状态
+            // 设置当前计时器状态
             setTimerType(state)
         }
     }

@@ -34,12 +34,12 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Exe, TargetFormat.Deb)
             packageName = "番茄时钟（Pomodoro Timer）"
-            packageVersion = "1.0.7"
+            packageVersion = "1.1.0"
 
             windows {
                 shortcut = true
                 menu = true
-                console = true
+                perUserInstall = true
             }
         }
     }
