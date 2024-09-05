@@ -24,6 +24,7 @@ dependencies {
     implementation("org.jetbrains.compose.material3:material3:1.6.11")
     implementation("androidx.compose.material:material-icons-extended:1.6.8")
     implementation("com.google.code.gson:gson:2.11.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 }
 
 compose.desktop {

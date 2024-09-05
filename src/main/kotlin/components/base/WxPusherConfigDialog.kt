@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import store.AppStore
+import utils.WxPusherUtil
 
 
 @Composable
@@ -77,6 +78,20 @@ fun WxPusherConfigDialog() {
                         .padding(paddingValues = PaddingValues(16.dp, 0.dp, 16.dp, 4.dp)),
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
+                    TextButton(
+                        onClick = {
+                            if (currentWxPusherUID.isEmpty()) {
+                                scope.launch {
+                                    state.snackbarHostState.showSnackbar(message = "请填写UID后再发送测试")
+                                }
+                                return@TextButton
+                            }
+                            WxPusherUtil.sendNotification("测试", "这是一条测试消息", uid = currentWxPusherUID)
+                        },
+                        contentPadding = PaddingValues(24.dp, 2.dp),
+                    ) {
+                        Text("发送测试")
+                    }
                     TextButton(
                         onClick = {
                             currentWxPusherUID = ""
