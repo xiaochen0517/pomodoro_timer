@@ -4,6 +4,7 @@ import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.NotificationsActive
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material.icons.filled.Timer
@@ -60,6 +61,16 @@ fun ControlBar() {
             modifier = Modifier.pointerHoverIcon(PointerIcon.Hand),
         ) {
             Icon(Icons.Default.Timer, contentDescription = "时间配置")
+        }
+
+
+        Button(
+            onClick = {
+                state.wxPusherDialogVisible = true
+            },
+            modifier = Modifier.pointerHoverIcon(PointerIcon.Hand),
+        ) {
+            Icon(Icons.Default.NotificationsActive, contentDescription = "Notification")
         }
     }
 }

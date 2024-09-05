@@ -13,18 +13,22 @@ import java.io.Serializable
 
 data class SerializableAppState(
     @Expose
-    var countDownType: CountDownType = CountDownType.MEDIUM,
+    var countDownType: CountDownType? = CountDownType.MEDIUM,
     @Expose
-    var currentTimerType: TimerType = TimerType.WORK,
+    var currentTimerType: TimerType? = TimerType.WORK,
     @Expose
-    var shortCycleCount: Int = 0,
+    var shortCycleCount: Int? = 0,
     @Expose
-    var longCycleCount: Int = 0,
+    var longCycleCount: Int? = 0,
     @Expose
-    var leftTime: Long = 2L
+    var leftTime: Long? = 2L,
+    @Expose
+    var wxPusherUID: String? = ""
 )
 
 class AppState : Serializable {
+
+    val appName = "番茄时钟（Pomodoro Timer）"
 
     var countDownType by mutableStateOf(CountDownType.MEDIUM)
     var currentTimerType by mutableStateOf(TimerType.WORK)
@@ -34,20 +38,17 @@ class AppState : Serializable {
     var leftTime by mutableStateOf(2L)
     var startCountDown by mutableStateOf(false)
 
+    var wxPusherUID by mutableStateOf("")
+
+    var hintWindowVisible by mutableStateOf(false)
     var mainWindowVisible by mutableStateOf(true)
     var currentView by mutableStateOf("home")
     var timerTypeDialogVisible by mutableStateOf(false)
-    var hintWindowVisible by mutableStateOf(false)
+    var wxPusherDialogVisible by mutableStateOf(false)
 
-    @Transient
     var trayState: TrayState? = null
 
-    @Transient
     val snackbarHostState = SnackbarHostState()
-
-    val appName = "番茄时钟（Pomodoro Timer）"
-
-    @Transient
     private var timerInfo = countDownType.getTimerInfo()
 
     private fun getLeftTimeByTimerType(timerType: TimerType): Long {
@@ -67,13 +68,13 @@ class AppState : Serializable {
      * set function
      */
     fun setState(newState: SerializableAppState) {
-        this.countDownType = newState.countDownType
-        this.currentTimerType = newState.currentTimerType
-        this.shortCycleCount = newState.shortCycleCount
-        this.longCycleCount = newState.longCycleCount
-
+        this.countDownType = newState.countDownType ?: CountDownType.MEDIUM
+        this.currentTimerType = newState.currentTimerType ?: TimerType.WORK
+        this.shortCycleCount = newState.shortCycleCount ?: 0
+        this.longCycleCount = newState.longCycleCount ?: 0
         this.timerInfo = this.countDownType.getTimerInfo()
-        this.leftTime = getLeftTimeByTimerType(this.currentTimerType)
+        this.leftTime = newState.leftTime ?: (this.timerInfo.work * 60).toLong()
+        this.wxPusherUID = newState.wxPusherUID ?: ""
     }
 
     fun setTimerType(timerType: TimerType) {
@@ -103,8 +104,14 @@ class AppState : Serializable {
             currentTimerType = this.currentTimerType,
             shortCycleCount = this.shortCycleCount,
             longCycleCount = this.longCycleCount,
-            leftTime = this.leftTime
+            leftTime = this.leftTime,
+            wxPusherUID = this.wxPusherUID
         )
+    }
+
+    fun saveWxPusherUID(wxPusherUID: String) {
+        this.wxPusherUID = wxPusherUID
+        StoreUtil.saveConfig()
     }
 
 }
