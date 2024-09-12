@@ -1,4 +1,4 @@
-package components.base
+package components.dialog.timeselector
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween

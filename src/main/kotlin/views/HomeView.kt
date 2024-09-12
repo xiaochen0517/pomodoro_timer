@@ -5,8 +5,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import components.base.TimeSelectorDialog
-import components.base.WxPusherConfigDialog
+import components.dialog.timeselector.TimeSelectorDialog
+import components.dialog.wxpusher.WxPusherConfigDialog
 import components.home.ControlBar
 import components.home.TimerCard
 import utils.LogUtil
