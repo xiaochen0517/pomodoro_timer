@@ -34,7 +34,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Exe, TargetFormat.Deb)
             packageName = "番茄时钟（Pomodoro Timer）"
-            packageVersion = "1.1.1"
+            packageVersion = "1.1.2"
 
             windows {
                 shortcut = true
