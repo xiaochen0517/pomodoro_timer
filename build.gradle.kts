@@ -34,7 +34,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Exe, TargetFormat.Deb)
             packageName = "Pomodoro Timer"
-            packageVersion = "1.1.5"
+            packageVersion = "1.1.6"
 
             windows {
                 shortcut = true
