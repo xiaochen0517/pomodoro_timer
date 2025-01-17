@@ -21,7 +21,7 @@ dependencies {
     // (in a separate module for demo project and in testMain).
     // With compose.desktop.common you will also lose @Preview functionality
     implementation(compose.desktop.currentOs)
-    implementation(compose.material3)
+    implementation("org.jetbrains.compose.material3:material3:1.6.11")
     implementation("androidx.compose.material:material-icons-extended:1.6.8")
     implementation("com.google.code.gson:gson:2.11.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
@@ -32,15 +32,16 @@ compose.desktop {
         mainClass = "MainKt"
 
         nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Exe, TargetFormat.Deb)
+            targetFormats(TargetFormat.Msi, TargetFormat.Exe)
+            includeAllModules = true
             packageName = "Pomodoro Timer"
             packageVersion = "1.1.6"
+            vendor = "MoChenYa"
 
             windows {
                 shortcut = true
                 menu = true
                 perUserInstall = true
-                upgradeUuid = "56e2ef7b-f08e-46ac-8638-06b0007fb3ea"
             }
         }
     }
