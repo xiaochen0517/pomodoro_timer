@@ -29,15 +29,25 @@ jobs:
       # 展示错误日志
       - name: Show error log
         if: failure()
+        shell: pwsh
         run: |
-          echo "=== Error Log List ==="
-          ls -l D:\a\pomodoro_timer\pomodoro_timer\build\compose\logs\packageExe\
+          Write-Host "=== Error Log List ==="
+          Get-ChildItem "build/compose/logs/packageExe" | Format-Table Mode, LastWriteTime, Length, Name
           
-          echo "=== Most Recent Error Log ==="
-          cat build/compose/logs/packageExe/jpackage-$(ls -t build/compose/logs/packageExe/jpackage-*-err.txt | head -n1)
+          Write-Host "`n=== Error Log Contents ==="
+          Get-ChildItem "build/compose/logs/packageExe/*err.txt" | 
+            Sort-Object LastWriteTime -Descending | 
+            Select-Object -First 1 | 
+            Get-Content
           
-          echo "=== Most Recent Output Log ==="
-          cat build/compose/logs/packageExe/jpackage-$(ls -t build/compose/logs/packageExe/jpackage-*-out.txt | head -n1)
+          Write-Host "`n=== Output Log Contents ==="
+          Get-ChildItem "build/compose/logs/packageExe/*out.txt" | 
+            Sort-Object LastWriteTime -Descending | 
+            Select-Object -First 1 | 
+            Get-Content
+          
+          Write-Host "`n=== Package Arguments ==="
+          Get-Content "build/compose/tmp/packageExe.args.txt"
 
       # 创建 Release 并上传构建产物
       - name: Upload build artifacts for release
