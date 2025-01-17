@@ -24,7 +24,7 @@ jobs:
 
       # 构建 Gradle 项目
       - name: Build with Gradle
-        run: ./gradlew.bat packageDistributionForCurrentOS --warning-mode all
+        run: ./gradlew.bat clean packageDistributionForCurrentOS --info --stacktrace
 
       # 创建 Release 并上传构建产物
       - name: Upload build artifacts for release
