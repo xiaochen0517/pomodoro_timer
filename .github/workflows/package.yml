@@ -53,7 +53,7 @@ jobs:
       - name: Upload build artifacts for release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "build/compose/binaries/exe/*.exe, build/compose/binaries/msi/*.msi"
+          artifacts: "build/compose/binaries/main/exe/*.exe, build/compose/binaries/main/msi/*.msi"
           tag: ${{ github.ref }}
           name: "Release ${{ github.ref }}"
           bodyFile: "CHANGELOG.md"

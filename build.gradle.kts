@@ -34,12 +34,13 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Exe, TargetFormat.Deb)
             packageName = "Pomodoro Timer"
-            packageVersion = "1.1.4"
+            packageVersion = "1.1.5"
 
             windows {
                 shortcut = true
                 menu = true
                 perUserInstall = true
+                upgradeUuid = "56e2ef7b-f08e-46ac-8638-06b0007fb3ea"
             }
         }
     }
