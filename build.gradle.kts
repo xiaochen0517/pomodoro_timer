@@ -33,7 +33,7 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Exe, TargetFormat.Deb)
-            packageName = "番茄时钟（Pomodoro Timer）"
+            packageName = "Pomodoro Timer"
             packageVersion = "1.1.4"
 
             windows {

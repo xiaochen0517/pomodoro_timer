@@ -11,14 +11,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      # 1. 设置系统区域为中文
-      - name: Set Windows locale
-        run: |
-          Set-WinSystemLocale -SystemLocale zh-CN
-          Set-WinHomeLocation -GeoId 45
-          Set-WinUserLanguageList zh-CN -Force
-        shell: pwsh
-
       # 配置 JDK 版本
       - name: Set up JDK 21
         uses: actions/setup-java@v4
