@@ -31,34 +31,12 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew.bat clean packageDistributionForCurrentOS
 
-      # 展示错误日志
-      - name: Show error log
-        if: failure()
-        shell: pwsh
-        run: |
-          Write-Host "=== Error Log List ==="
-          Get-ChildItem "build/compose/logs/packageExe" | Format-Table Mode, LastWriteTime, Length, Name
-          
-          Write-Host "`n=== Error Log Contents ==="
-          Get-ChildItem "build/compose/logs/packageExe/*err.txt" | 
-            Sort-Object LastWriteTime -Descending | 
-            Select-Object -First 1 | 
-            Get-Content
-          
-          Write-Host "`n=== Output Log Contents ==="
-          Get-ChildItem "build/compose/logs/packageExe/*out.txt" | 
-            Sort-Object LastWriteTime -Descending | 
-            Select-Object -First 1 | 
-            Get-Content
-          
-          Write-Host "`n=== Package Arguments ==="
-          Get-Content "build/compose/tmp/packageExe.args.txt"
-
       # 创建 Release 并上传构建产物
       - name: Upload build artifacts for release
         uses: ncipollo/release-action@v1
         with:
           artifacts: "build/compose/binaries/main/exe/*.exe, build/compose/binaries/main/msi/*.msi"
           tag: ${{ github.ref }}
-          name: "Release ${{ github.ref }}"
+          name: ${{ github.ref_name }}
           bodyFile: "CHANGELOG.md"
+          generateReleaseNotes: true
