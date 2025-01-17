@@ -26,6 +26,19 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew.bat clean packageDistributionForCurrentOS --info --stacktrace
 
+      # 展示错误日志
+      - name: Show error log
+        if: failure()
+        run: |
+          echo "=== Error Log List ==="
+          ls -l D:\a\pomodoro_timer\pomodoro_timer\build\compose\logs\packageExe\
+          
+          echo "=== Most Recent Error Log ==="
+          cat build/compose/logs/packageExe/jpackage-$(ls -t build/compose/logs/packageExe/jpackage-*-err.txt | head -n1)
+          
+          echo "=== Most Recent Output Log ==="
+          cat build/compose/logs/packageExe/jpackage-$(ls -t build/compose/logs/packageExe/jpackage-*-out.txt | head -n1)
+
       # 创建 Release 并上传构建产物
       - name: Upload build artifacts for release
         uses: ncipollo/release-action@v1
