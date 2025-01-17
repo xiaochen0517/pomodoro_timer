@@ -20,6 +20,10 @@ jobs:
           java-version: '21'
           distribution: 'oracle'
 
+      # 配置 Gradle
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
       # 构建 Gradle 项目
       - name: Build with Gradle
         run: ./gradlew package
